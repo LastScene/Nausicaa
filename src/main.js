@@ -4,12 +4,11 @@ import { Plugin as VueFragment } from 'vue-fragment';
 import SvgIcon from 'vue-svgicon';
 import _upperFirst from 'lodash.upperfirst';
 import _camelCase from 'lodash.camelcase';
+import vueBemCn from 'vue-bem-cn';
 
 import App from './App.vue';
 import router from './router';
-
 import store from './store';
-
 import '~styles/global.scss';
 
 const requireComponent = require.context(
@@ -37,6 +36,16 @@ Vue.use(VueFragment);
 Vue.use(SvgIcon, {
     tagName: 'svg-icon',
     isOriginalDefault: true
+});
+
+Vue.use(vueBemCn, {
+    delimiters: {
+        ns: '',
+        el: '__',
+        mod: '--',
+        modVal: ':'
+    },
+    hyphenate: false
 });
 
 Vue.config.productionTip = false;

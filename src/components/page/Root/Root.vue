@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { watch } from '@vue/composition-api';
+import useAuth from '~composables/authentication';
 import TheSidebar from '~layout/Sidebar/Sidebar';
 
 export default {
@@ -14,7 +16,16 @@ export default {
         TheSidebar
     },
     props: {},
-    data() {
+    setup(props, context) {
+        function isMiddleOfAuthenticating() {
+            const queryParams = new URLSearchParams(window.location.search);
+            return queryParams.get('request_token') && queryParams.get('approved');
+        }
+
+        const { token } = useAuth();
+        if (!token.value && !isMiddleOfAuthenticating()) {
+            context.root.$router.replace({ name: 'auth' });
+        }
         return {};
     }
 };

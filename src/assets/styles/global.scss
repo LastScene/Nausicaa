@@ -5,11 +5,13 @@ html {
     background-color: $color-background;
     min-height: 100vh;
     min-width: 100vw;
+    size: 100%;
 }
 
 body {
     min-height: 100vh;
     min-width: 100vw;
+    size: 100%;
     font-family: $typeface--primary, system-ui;
     background-color: $color-background;
 }

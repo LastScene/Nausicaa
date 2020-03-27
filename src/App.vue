@@ -1,16 +1,19 @@
 <template>
     <div id="app">
-        <the-root />
+        <router-view />
     </div>
 </template>
 
 <script>
-import TheRoot from '~page/Root';
-
 export default {
     name: 'App',
-    components: {
-        TheRoot
+    setup(props, context) {
     }
 };
 </script>
+
+<style scoped lang="scss">
+#app {
+    size: 100%;
+}
+</style>

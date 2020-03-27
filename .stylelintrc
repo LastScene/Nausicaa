@@ -9,7 +9,6 @@
         'no-duplicate-selectors': true,
         'color-hex-case': 'upper',
         'color-hex-length': 'long',
-        'color-named': 'never',
         'declaration-block-trailing-semicolon': 'always',
         'declaration-no-important': true,
         'declaration-colon-space-before': 'never',

@@ -16,7 +16,11 @@ export default {
     },
     setup(props) {
         onMounted(() => {
-            return import(`~icons/${props.name}`);
+            return import(
+                /* webpackChunkName: "icons" */
+                /* webpackMode: "lazy-once" */
+                `~icons/${props.name}`
+            );
         });
 
         return {};

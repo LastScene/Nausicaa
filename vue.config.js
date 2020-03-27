@@ -3,12 +3,19 @@ const BitBarWebpackProgressPlugin = require('bitbar-webpack-progress-plugin');
 module.exports = {
     lintOnSave: false,
 
+    devServer: {
+        host: process.env.VUE_APP_HOST,
+        port: process.env.VUE_APP_PORT,
+        progress: false
+    },
+
     pluginOptions: {
         'style-resources-loader': {
             preProcessor: 'scss',
             patterns: [
                 './src/assets/styles/helpers/*.scss',
-                './src/assets/styles/variables/index.scss'
+                './src/assets/styles/variables/*.scss',
+                './src/assets/styles/interface/*.scss'
             ]
         }
     },
@@ -24,9 +31,5 @@ module.exports = {
         plugins: [
             new BitBarWebpackProgressPlugin()
         ]
-    },
-
-    chainWebpack: (config) => {
-        config.plugins.delete('progress');
     }
 };
