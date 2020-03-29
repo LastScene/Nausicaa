@@ -4,9 +4,14 @@ export const createHttp = ({ baseURL }) => {
     const httpInstance = axios.create({
         baseURL
     });
-    httpInstance.interceptors.response.use((response) => {
-        return response.data;
-    });
+    httpInstance.interceptors.response.use(
+        (response) => {
+            return Promise.resolve(response.data);
+        },
+        ({ response }) => {
+            return Promise.reject(response);
+        }
+    );
     return httpInstance;
 };
 

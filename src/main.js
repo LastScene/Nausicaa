@@ -8,7 +8,6 @@ import vueBemCn from 'vue-bem-cn';
 
 import App from './App.vue';
 import router from './router';
-import store from './store';
 import '~styles/global.scss';
 
 const requireComponent = require.context(
@@ -48,11 +47,11 @@ Vue.use(vueBemCn, {
     hyphenate: false
 });
 
+
 Vue.config.productionTip = false;
 
 new Vue({
     router,
-    store,
     render: (h) => {
         return h(App);
     }

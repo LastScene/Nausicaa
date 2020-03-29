@@ -1,38 +1,63 @@
-import vue from 'vue';
-import compositionAPI, { ref, watch, computed } from '@vue/composition-api';
-import tmdbAPI from '~api/tmdb';
+import Vue from 'vue';
+import compositionAPI, { watch, computed } from '@vue/composition-api';
+import { useRetry } from 'vue-composable';
+import useTmdbAPI from '~api/tmdb';
 
-vue.use(compositionAPI);
-
-const token = ref(localStorage.getItem('token') ?? null);
+Vue.use(compositionAPI);
 
 export default function useAuthentication() {
-    const getNewRequestToken = async () => {
-        const requestToken = await tmdbAPI.auth.getRequestToken();
-        tmdbAPI.auth.askPermission(requestToken);
-    };
+    const { useAccount, useSetting } = useTmdbAPI();
+    const {
+        accessToken,
+        requestToken,
+        getRequestToken,
+        askPermission,
+        getAccessToken
+    } = useAccount({
+        token: localStorage.getItem('token')
+    });
 
-    const getNewSessionID = async (requestToken) => {
-        const sessionID = await tmdbAPI.auth.getSessionID(requestToken);
-        token.value = sessionID;
-        return sessionID;
-    };
+    async function getNewToken() {
+        await getRequestToken();
 
-    watch(token, () => {
-        if (token.value) {
-            localStorage.setItem('token', token.value);
-            tmdbAPI.setting.setToken(token.value);
+        askPermission();
+
+        const { cancel: stopTrying, exec: retry } = useRetry({
+            retryDelay() {
+                return 500;
+            }
+        });
+        return retry(async () => {
+            try {
+                const accessToken = await getAccessToken();
+                return Promise.resolve(accessToken);
+            } catch (error) {
+                if (error.status == 422) {
+                    throw error;
+                }
+                stopTrying();
+            }
+        });
+    }
+
+    const { setToken } = useSetting();
+    watch(accessToken, () => {
+        if (accessToken.value) {
+            localStorage.setItem('accessToken', accessToken.value);
+            setToken(accessToken.value);
         }
+    }, {
+        lazy: true
     });
 
     const isAuthenticated = computed(() => {
-        return !!token;
+        return !!accessToken.value;
     });
 
     return {
-        getNewRequestToken,
-        getNewSessionID,
-        token,
-        isAuthenticated
+        requestToken,
+        accessToken,
+        isAuthenticated,
+        getNewToken
     };
 }

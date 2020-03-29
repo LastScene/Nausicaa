@@ -5,7 +5,7 @@
         v-bind="$attrs"
         v-on="$listeners"
     >
-        <div :class="b('itself')">
+        <div :class="b('itself', { isLoading:loading })">
             <base-icon
                 v-if="icon"
                 :name="icon"
@@ -103,6 +103,10 @@ export default {
         box: horizontal middle center;
         padding: ms(1);
         border-radius: 10em;
+
+        @include is(loading) {
+            filter: blur(1px);
+        }
     }
 
     &__icon {
@@ -139,6 +143,7 @@ export default {
 
     &__loadingIcon {
         opacity: 0;
+        size: ms(1.3);
         transition: opacity .15s .3s;
 
         @include is(spining) {

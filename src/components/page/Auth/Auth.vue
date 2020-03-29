@@ -10,9 +10,9 @@
                     Click to authenticate with TMDB service. If you don't have an account, simply register a free acount, and click to connect.
                 </p>
                 <base-button
-                    v-if="!isGettingSession"
+                    v-if="!isLoading('accessToken').value"
                     :class="b('cta')"
-                    :loading="isGettingRequestToken"
+                    :loading="isLoading('requestToken').value"
                     variant="primary"
                     icon="links-line"
                     @click="authorize"
@@ -20,7 +20,7 @@
                     Connect to TMDB
                 </base-button>
                 <div
-                    v-if="isGettingSession"
+                    v-if="isLoading('accessToken').value"
                     :class="b('working')"
                 >
                     <base-icon
@@ -35,46 +35,40 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from '@vue/composition-api';
+import { watch } from '@vue/composition-api';
 import useAuthModule from '~composables/authentication';
+import useLoading from '~composables/loading';
 
 export default {
     name: 'Auth',
     props: {},
     setup(props, context) {
-        function isMiddleOfAutheticating() {
-            const queryParams = new URLSearchParams(window.location.search);
-            return queryParams.get('request_token') && queryParams.get('approved');
-        }
-
-        const { getNewRequestToken, getNewSessionID, token } = useAuthModule();
-        const isGettingRequestToken = ref(false);
-        const isGettingSession = ref(isMiddleOfAutheticating());
-        async function authorize() {
-            isGettingRequestToken.value = true;
-            await getNewRequestToken();
-            isGettingSession.value = true;
-            isGettingRequestToken.value = false;
-        }
-
-        onMounted(async () => {
-            if (isMiddleOfAutheticating()) {
-                await getNewSessionID(context.root.$route.query.request_token);
-            }
-        });
-
-        watch(token, () => {
-            if (token.value) {
-                context.root.$router.push({
-                    name: 'root'
-                });
-            }
-        });
+        const {
+            isLoading, setLoading, unsetLoading
+        } = useLoading();
+        const { getNewToken, accessToken, requestToken } = useAuthModule();
+        const authorize = async () => {
+            setLoading('requestToken');
+            watch(requestToken, () => {
+                debugger;
+                if (requestToken.value) {
+                    unsetLoading('requestToken');
+                    setLoading('accessToken');
+                }
+            }, { lazy: true });
+            watch(accessToken, () => {
+                if (accessToken.value) {
+                    context.root.$router.push({
+                        name: 'root'
+                    });
+                }
+            }, { lazy: true });
+            await getNewToken();
+        };
 
         return {
-            isGettingRequestToken,
-            isGettingSession,
-            authorize
+            authorize,
+            isLoading
         };
     }
 };

@@ -1,15 +1,26 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { reactive, toRefs } from '@vue/composition-api';
+import account from './modules/account';
 
-Vue.use(Vuex);
+export default function useStore() {
+    const state = reactive({
 
-export default new Vuex.Store({
-    state: {
-    },
-    mutations: {
-    },
-    actions: {
-    },
-    modules: {
-    }
-});
+    });
+    const getters = {
+
+    };
+    const modifiers = {
+
+    };
+    const modules = {
+        account
+    };
+
+    return {
+        ...toRefs(state),
+        ...getters,
+        ...modifiers,
+        _: modules
+    };
+}
+
+export const StoreKey = Symbol('store key');
