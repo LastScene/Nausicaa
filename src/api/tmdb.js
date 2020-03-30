@@ -1,90 +1,73 @@
 import vue from 'vue';
 import compositionAPI, { ref } from '@vue/composition-api';
-import { createHttp, setToken as setHttpToken, removeToken as removeHttpToken } from '~services/http';
+import {
+    createHttp,
+    setToken as setHttpToken,
+    removeToken as removeHttpToken,
+    setParam as setHttpParam
+} from '~services/http';
 
 vue.use(compositionAPI);
 
 // tmdb.common.images_uri = 'https://image.tmdb.org/t/p/';
 export const tmdbHttp = createHttp({
-    baseURL: 'https://api.themoviedb.org/4/',
+    baseURL: 'https://api.themoviedb.org',
     timeout: 5000
 });
 
-setHttpToken(tmdbHttp, process.env.VUE_APP_TMDB_ACCESS_TOKEN);
+setHttpParam(tmdbHttp, 'api_key', process.env.VUE_APP_TMDB_API_KEY);
+setHttpParam(tmdbHttp, 'session_id', localStorage.getItem('sessionID'));
+setHttpToken(tmdbHttp, localStorage.getItem('accessToken') || process.env.VUE_APP_TMDB_ACCESS_TOKEN);
 
-export default function useTmdbAPI() {
-    function useSetting() {
-        function setToken(accessToken) {
+export default {
+    setting: {
+        setToken(accessToken) {
             setHttpToken(tmdbHttp, accessToken);
-        }
-        function removeToken() {
+        },
+        removeToken() {
             removeHttpToken(tmdbHttp);
+        },
+        setParam(key, value) {
+            setHttpParam(tmdbHttp, key, value);
         }
+    },
 
-        return {
-            setToken,
-            removeToken
-        };
-    }
-
-    function useAccount(existingToken) {
-        const requestToken = ref(null);
-        const accessToken = ref(existingToken);
-        const accountID = ref(null);
-
-        async function getRequestToken() {
-            const { request_token: tmdbRequestToken } = await tmdbHttp.post('/auth/request_token');
-            requestToken.value = tmdbRequestToken;
-        }
-        async function askPermission() {
+    account: {
+        async getRequestToken() {
+            const { request_token: tmdbRequestToken } = await tmdbHttp.post('/4/auth/request_token');
+            return tmdbRequestToken;
+        },
+        async askPermission(requestToken) {
             window.open(
-                `https://www.themoviedb.org/auth/access?request_token=${requestToken.value}&redirect_to=http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}/auth`,
+                `https://www.themoviedb.org/auth/access?request_token=${requestToken}&redirect_to=http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}/auth`,
                 '_blank'
             );
-        }
-        async function getAccessToken() {
+        },
+        async getAccessToken(requestToken) {
             try {
-                if (!requestToken.value) throw new Error('No request token provided!');
-                const { access_token: tmdbAccessToken, account_id: tmdbAccountID } = await tmdbHttp.post('/auth/access_token', {
-                    request_token: requestToken.value
+                if (!requestToken) throw new Error('No request token provided!');
+                const { access_token: tmdbAccessToken } = await tmdbHttp.post('/4/auth/access_token', {
+                    request_token: requestToken
                 });
-                accessToken.value = tmdbAccessToken;
-                accountID.value = tmdbAccountID;
+                return tmdbAccessToken;
             } catch (error) {
                 return Promise.reject(error);
             }
-        }
-
-        return {
-            requestToken,
-            accessToken,
-            getRequestToken,
-            askPermission,
-            getAccessToken
-        };
-    }
-
-    const account = {
+        },
+        async convertAccessTokenToSessionID(accessToken) {
+            try {
+                if (!accessToken) throw new Error('No access token provided!');
+                const { session_id: tmdbSessionID } = await tmdbHttp.post('/3/authentication/session/convert/4', {
+                    access_token: accessToken
+                });
+                return tmdbSessionID;
+            } catch (error) {
+                return Promise.reject(error);
+            }
+        },
         async getDetails() {
-            const details = await tmdbHttp.get('/account');
+            const details = await tmdbHttp.get('/3/account');
             return details;
         }
-    };
-    const library = {
-        async init() {
-            const allLists = await tmdbHttp.get();
-        // const { success } = await tmdbHttp.post('/list', {
-        //     name: 'Archive',
-        //     description: 'Archived movies. (Created by LastScene)',
-        //     language: 'en'
-        // });
-        }
-    };
-
-    return {
-        useSetting,
-        useAccount,
-        account,
-        library
-    };
-}
+    }
+};

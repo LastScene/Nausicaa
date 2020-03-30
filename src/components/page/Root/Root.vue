@@ -1,13 +1,16 @@
 <template>
-    <main class="root">
+    <main
+        v-if="isAuthenticated"
+        class="root"
+    >
         <the-sidebar class="root__sidebar" />
         <router-view />
     </main>
 </template>
 
 <script>
-import { provide } from '@vue/composition-api';
-import useStore, { StoreKey } from '~store$';
+import { inject } from '@vue/composition-api';
+import { RepositoryKey } from '~repository$';
 import useAuth from '~composables/authentication';
 import TheSidebar from '~layout/Sidebar/Sidebar';
 
@@ -18,17 +21,15 @@ export default {
     },
     props: {},
     setup(props, context) {
-        const { token } = useAuth();
-        if (!token.value) {
+        const { isAuthenticated } = useAuth();
+        if (!isAuthenticated.value) {
             context.root.$router.replace({ name: 'auth' });
         }
 
-        const store = useStore();
-        provide(StoreKey, store);
+        const { account: accountRepo } = inject(RepositoryKey);
+        accountRepo._.getDetails();
 
-        store._.account.init();
-
-        return {};
+        return { isAuthenticated };
     }
 };
 </script>

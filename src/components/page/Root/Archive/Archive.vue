@@ -8,7 +8,7 @@
 
 <script>
 import { inject } from '@vue/composition-api';
-import { StoreKey } from '~store$';
+import { RepositoryKey } from '~repository$';
 import Counter from '~layout/Counter/Counter';
 import MoviesList from '~organism/MoviesList/MoviesList';
 
@@ -20,10 +20,9 @@ export default {
     },
     props: {},
     setup() {
-        const store = inject(StoreKey, {});
-
+        const repository = inject(RepositoryKey, {});
         return {
-            store
+            repository
         };
     }
 };

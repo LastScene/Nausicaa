@@ -5,9 +5,14 @@
 </template>
 
 <script>
+import { provide } from '@vue/composition-api';
+import useRepository, { RepositoryKey } from '~repository$';
+
 export default {
     name: 'App',
     setup(props, context) {
+        const repository = useRepository();
+        provide(RepositoryKey, repository);
     }
 };
 </script>

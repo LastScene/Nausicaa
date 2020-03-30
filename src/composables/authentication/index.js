@@ -1,62 +1,61 @@
 import Vue from 'vue';
-import compositionAPI, { watch, computed } from '@vue/composition-api';
+import compositionAPI, { watch, computed, ref } from '@vue/composition-api';
 import { useRetry } from 'vue-composable';
-import useTmdbAPI from '~api/tmdb';
+import { tmdbAPI } from '~api';
 
 Vue.use(compositionAPI);
 
 export default function useAuthentication() {
-    const { useAccount, useSetting } = useTmdbAPI();
-    const {
-        accessToken,
-        requestToken,
-        getRequestToken,
-        askPermission,
-        getAccessToken
-    } = useAccount({
-        token: localStorage.getItem('token')
-    });
-
+    const requestToken = ref(null);
+    const sessionID = ref(localStorage.getItem('sessionID') || null);
+    const accessToken = ref(localStorage.getItem('accessToken') || null);
     async function getNewToken() {
-        await getRequestToken();
-
-        askPermission();
-
+        requestToken.value = await tmdbAPI.account.getRequestToken();
+        tmdbAPI.account.askPermission(requestToken.value);
         const { cancel: stopTrying, exec: retry } = useRetry({
             retryDelay() {
-                return 500;
+                return 2000;
             }
         });
-        return retry(async () => {
-            try {
-                const accessToken = await getAccessToken();
-                return Promise.resolve(accessToken);
-            } catch (error) {
-                if (error.status == 422) {
-                    throw error;
+        return setTimeout(() => {
+            return retry(async () => {
+                try {
+                    accessToken.value = await tmdbAPI.account.getAccessToken(requestToken.value);
+                    sessionID.value = await tmdbAPI.account.convertAccessTokenToSessionID(accessToken.value);
+                    debugger;
+                    return Promise.resolve(accessToken);
+                } catch (error) {
+                    console.dir(error);
+                    if (error.status == 422 || error.status == 401) {
+                        throw error;
+                    }
+                    stopTrying();
                 }
-                stopTrying();
-            }
-        });
+            });
+        }, 2000);
     }
 
-    const { setToken } = useSetting();
     watch(accessToken, () => {
         if (accessToken.value) {
             localStorage.setItem('accessToken', accessToken.value);
-            setToken(accessToken.value);
+            tmdbAPI.setting.setToken(accessToken.value);
         }
-    }, {
-        lazy: true
-    });
+    }, { lazy: true });
+    watch(sessionID, () => {
+        if (sessionID.value) {
+            localStorage.setItem('sessionID', sessionID.value);
+            tmdbAPI.setting.setParam('session_id', sessionID.value);
+        }
+    }, { lazy: true });
 
     const isAuthenticated = computed(() => {
-        return !!accessToken.value;
+        return !!accessToken.value && !!sessionID.value;
     });
 
     return {
         requestToken,
         accessToken,
+        sessionID,
         isAuthenticated,
         getNewToken
     };

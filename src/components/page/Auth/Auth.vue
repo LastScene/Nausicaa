@@ -46,18 +46,19 @@ export default {
         const {
             isLoading, setLoading, unsetLoading
         } = useLoading();
-        const { getNewToken, accessToken, requestToken } = useAuthModule();
+        const {
+            getNewToken, accessToken, sessionID, requestToken
+        } = useAuthModule();
         const authorize = async () => {
             setLoading('requestToken');
             watch(requestToken, () => {
-                debugger;
                 if (requestToken.value) {
                     unsetLoading('requestToken');
                     setLoading('accessToken');
                 }
             }, { lazy: true });
-            watch(accessToken, () => {
-                if (accessToken.value) {
+            watch([accessToken, sessionID], () => {
+                if (accessToken.value && sessionID.value) {
                     context.root.$router.push({
                         name: 'root'
                     });
