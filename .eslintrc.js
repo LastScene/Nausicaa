@@ -1,6 +1,6 @@
 module.exports = {
     root: true,
-    parser: "vue-eslint-parser",
+    parser: 'vue-eslint-parser',
     parserOptions: {
         parser: 'babel-eslint',
         ecmaVersion: 8,
@@ -13,16 +13,13 @@ module.exports = {
     },
 
     extends: [
-        "plugin:vue/recommended",
+        'plugin:vue/vue3-recommended',
         'plugin:vue-types/strongly-recommended',
         '@vue/airbnb',
         'plugin:jest/all'
     ],
 
-    plugins: [
-        'vue',
-        'jest'
-    ],
+    plugins: ['vue', 'jest'],
 
     rules: {
         indent: ['error', 4],
