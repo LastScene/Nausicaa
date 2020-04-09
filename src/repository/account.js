@@ -1,11 +1,14 @@
 import Vue from 'vue';
-import VueCompositionApi, { ref, reactive, toRefs } from '@vue/composition-api';
+import VueCompositionApi, { reactive, toRefs } from '@vue/composition-api';
 import { tmdbAPI } from '~api$';
 
 Vue.use(VueCompositionApi);
 
 const state = reactive({
-    id: null,
+    id: {
+        v3: null,
+        v4: null
+    },
     avatar: null,
     name: null,
     username: null
@@ -14,8 +17,9 @@ const state = reactive({
 const modifiers = {
     async getDetails() {
         const details = await tmdbAPI.account.getDetails();
-        state.avatar = `${details.avatar.gravatar.hash}.jpg`;
-        state.id = details.id;
+        state.avatar = details.avatar;
+        state.id.v3 = details.id.v3;
+        state.id.v4 = details.id.v4;
         state.name = details.name;
         state.username = details.username;
     }

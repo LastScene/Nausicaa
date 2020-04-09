@@ -22,7 +22,6 @@ export default function useAuthentication() {
                 try {
                     accessToken.value = await tmdbAPI.account.getAccessToken(requestToken.value);
                     sessionID.value = await tmdbAPI.account.convertAccessTokenToSessionID(accessToken.value);
-                    debugger;
                     return Promise.resolve(accessToken);
                 } catch (error) {
                     console.dir(error);

@@ -1,22 +1,24 @@
-$color-gigas--100: #D1DBE3;
-$color-gigas--400: #8795E2;
-$color-gigas--400: #8795E2;
-$color-gigas--500: #473D8B;
+$pallete: (
+    violet: #B4547E,
+    clay: #191E31,
+    blue: #6B84C1,
+    red: #D47992,
+    green: #66AB52,
+    yellow: #D7D447,
+    orange: #DEAC37,
+    teal: #008090
+);
 
-$color-mirage: #191727;
+@function pallete($name) {
+    $color: map-get($pallete, $name);
 
-$color-kinda-white: #D1DBE3;
+    @return $color;
+}
 
-$color-green--500: #1B8736;
+@function tint($color, $percentage) {
+    @return mix(white, $color, $percentage);
+}
 
-$color-gold--500: #CBC087;
-$color-gold--600: mix(black, $color-gold--500, 5%);
-$color-gold--700: mix(black, $color-gold--600, 5%);
-$color-gold--800: mix(black, $color-gold--700, 5%);
-
-$color-blue--500: #0185B5;
-$color-blue--800: #486073;
-
-$color-orange--500: #DD7002;
-
-$color-red--500: #961F1F;
+@function shade($color, $percentage) {
+    @return mix(black, $color, $percentage);
+}

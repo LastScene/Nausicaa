@@ -11,7 +11,7 @@ import router from './router';
 import '~styles/global.scss';
 
 const requireComponent = require.context(
-    './components/base',
+    './components/0_base',
     true,
     /Base[A-Z]\w+\.vue$/
 );
