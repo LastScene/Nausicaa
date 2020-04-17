@@ -47,6 +47,7 @@ module.exports = {
             }
         ],
         'comma-dangle': ['error', 'never'],
+        'quote-props': ['error', 'consistent'],
         'consistent-return': 'off',
         'no-shadow': 'off',
         'no-plusplus': 'off',
@@ -105,7 +106,7 @@ module.exports = {
     },
 
     settings: {
-        'vue-types/namespace': ['VueTypes']
+        'vue-types/namespace': ['VT']
     },
 
     overrides: [

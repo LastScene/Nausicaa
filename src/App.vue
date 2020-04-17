@@ -1,9 +1,3 @@
-<template>
-    <div id="app">
-        <router-view />
-    </div>
-</template>
-
 <script>
 import { provide } from '@vue/composition-api';
 import useRepository, { RepositoryKey } from '~repository$';
@@ -17,7 +11,13 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<template>
+    <div id="app">
+        <router-view />
+    </div>
+</template>
+
+<style scoped lang="postcss">
 #app {
     size: 100%;
 }

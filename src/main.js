@@ -8,10 +8,10 @@ import vueBemCn from 'vue-bem-cn';
 
 import App from './App.vue';
 import router from './router';
-import '~styles/global.scss';
+import '~styles/base.css';
 
 const requireComponent = require.context(
-    './components/0_base',
+    './components/0_atoms',
     true,
     /Base[A-Z]\w+\.vue$/
 );

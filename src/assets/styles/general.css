@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700;800&display=swap&display=block');
+
+html {
+    background-color: theme(colors.primary.900);
+    min-height: 100vh;
+    min-width: 100vw;
+    size: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-width: 100vw;
+    size: 100%;
+    font-family: theme(fontFamily.primary);
+    background-color: theme(colors.primary.900);
+}
+
+/* DEFAULT STYLE */
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    line-height: 1.2;
+}
+
+a {
+    color: currentColor;
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+svg {
+    size: 1em;
+}

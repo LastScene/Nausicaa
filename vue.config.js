@@ -10,13 +10,8 @@ module.exports = {
     },
 
     pluginOptions: {
-        'style-resources-loader': {
-            preProcessor: 'scss',
-            patterns: [
-                './src/assets/styles/helpers/*.scss',
-                './src/assets/styles/variables/*.scss',
-                './src/assets/styles/interface/*.scss'
-            ]
+        electronBuilder: {
+            builderOptions: {}
         }
     },
 
@@ -24,12 +19,11 @@ module.exports = {
     productionSourceMap: false,
 
     css: {
-        sourceMap: true
+        sourceMap: true,
+        extract: false
     },
 
     configureWebpack: {
-        plugins: [
-            new BitBarWebpackProgressPlugin()
-        ]
+        plugins: [new BitBarWebpackProgressPlugin()]
     }
 };

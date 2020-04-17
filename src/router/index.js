@@ -1,24 +1,24 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { isAuthenticated } from '~composables/authentication';
+import { isElectron } from '~config/environtment';
 
 const Auth = () => {
-    return import('~page/Auth/Auth');
+    return import('~pages/Auth/Auth');
 };
 const Root = () => {
-    return import('~page/Root/Root');
+    return import('~pages/Root/Root');
 };
 const Archive = () => {
-    return import('~page/Root/Archive/Archive');
+    return import('~pages/Root/Archive/Archive');
 };
 const RecentlyAdded = () => {
-    return import('~page/Root/RecentlyAdded/RecentlyAdded');
+    return import('~pages/Root/RecentlyAdded/RecentlyAdded');
 };
 const WatchList = () => {
-    return import('~page/Root/WatchList/WatchList');
+    return import('~pages/Root/WatchList/WatchList');
 };
 const Favorites = () => {
-    return import('~page/Root/Favorites/Favorites');
+    return import('~pages/Root/Favorites/Favorites');
 };
 
 Vue.use(VueRouter);
@@ -62,7 +62,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: isElectron ? 'hash' : 'history',
     base: process.env.BASE_URL,
     routes
 });

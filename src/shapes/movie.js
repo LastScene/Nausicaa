@@ -1,9 +1,9 @@
-import VueTypes from 'vue-types';
+import VT from 'vue-types';
 
-export default VueTypes.shape({
-    id: VueTypes.string.isRequired,
-    cover: VueTypes.string.isRequired,
-    title: VueTypes.string.isRequired,
-    director: VueTypes.string.isRequired,
-    imdbRate: VueTypes.oneOfType([VueTypes.number, VueTypes.string]).def('N/A')
+export default VT.shape({
+    id: VT.string.isRequired,
+    cover: VT.string.isRequired,
+    title: VT.string.isRequired,
+    director: VT.string.isRequired,
+    imdbRate: VT.oneOfType([VT.number, VT.string]).def('N/A')
 });
