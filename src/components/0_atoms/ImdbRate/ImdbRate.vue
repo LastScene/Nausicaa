@@ -28,22 +28,19 @@ export default {
 @b ImdbRate {
     background: linear-gradient(90deg, #DBA506 0%, #F2DB83 54.79%, #DBA506 100%);
     border-radius: 5px;
-    padding: ms(-1) theme(spacing.4);
-    color: #191727;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: max-content;
+    padding: theme(spacing.1) theme(spacing.3);
+    color: theme(colors.primary.accent.800);
+    box: horizontal middle;
 
     @e label {
         font-weight: 700;
-        font-size: theme(spacing.2);
-        margin-right: theme(spacing.4);
+        font-size: theme(fontSize.xs);
+        margin-right: theme(spacing.2);
     }
 
     @e value {
-        font-weight: 600;
-        font-size: theme(spacing.3);
+        font-weight: theme(fontWeight.black);
+        font-size: theme(fontSize.sm);
     }
 }
 </style>

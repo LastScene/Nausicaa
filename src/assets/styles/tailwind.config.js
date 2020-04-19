@@ -10,7 +10,18 @@ module.exports = {
                 600: '#3E4776',
                 700: '#333B61',
                 800: '#282E4D',
-                900: '#1E2238'
+                900: '#1E2238',
+                accent: {
+                    100: '#F6F1E6',
+                    200: '#E5D4B3',
+                    300: '#d4b881',
+                    400: '#C7AB76',
+                    500: '#B99F6B',
+                    600: '#AB9261',
+                    700: '#9D8557',
+                    800: '#806B43',
+                    900: '#715E3A'
+                }
             },
             secondary: {
                 100: '#FEFDFD',
@@ -22,6 +33,17 @@ module.exports = {
                 700: '#613C42',
                 800: '#4D3034',
                 900: '#392326'
+            },
+            gray: {
+                100: '#FCFCFC',
+                200: '#E0E0E0',
+                300: '#C4C4C4',
+                400: '#A8A8A8',
+                500: '#8C8C8C',
+                600: '#707070',
+                700: '#545454',
+                800: '#383838',
+                900: '#1C1C1C'
             }
         },
         spacing: {
@@ -39,23 +61,12 @@ module.exports = {
             12: '46.971rem',
             13: '75.999rem'
         },
-        gray: {
-            100: '#FCFCFC',
-            200: '#E0E0E0',
-            300: '#C4C4C4',
-            400: '#A8A8A8',
-            500: '#8C8C8C',
-            600: '#707070',
-            700: '#545454',
-            800: '#383838',
-            900: '#1C1C1C'
-        },
         fontFamily: {
-            primary: '"Baloo Thambi 2"'
+            primary: '"Linotte"'
         },
         fontSize: {
-            'tiny': '0.64rem',
-            'xs': '0.8rem',
+            'tiny': '0.512rem',
+            'xs': '0.64rem',
             'sm': '0.8rem',
             'base': '1rem',
             'lg': '1.25rem',
@@ -66,11 +77,11 @@ module.exports = {
             '5xl': '3.815rem'
         },
         fontWeight: {
+            light: 300,
             regular: 400,
-            medium: 500,
             semibold: 600,
             bold: 700,
-            extrabold: 800
+            black: 900
         },
         lineHeight: {
             oneLine: '1',

@@ -1,15 +1,8 @@
-<template>
-    <section class="counter">
-        <searcher />
-        <slot />
-    </section>
-</template>
-
 <script>
 import Searcher from '~molecules/Searcher/Searcher';
 
 export default {
-    name: 'ComponentName',
+    name: 'Counter',
     components: {
         Searcher
     },
@@ -20,11 +13,18 @@ export default {
 };
 </script>
 
+<template>
+    <section :class="b()">
+        <searcher />
+        <slot />
+    </section>
+</template>
+
 <style scoped lang="postcss">
-.counter {
+@b Counter {
     display: grid;
     grid-auto-flow: row;
     align-items: start;
-    gap: ms(3);
+    gap: theme(spacing.6);
 }
 </style>

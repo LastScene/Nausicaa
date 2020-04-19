@@ -33,7 +33,7 @@ export default {
 <style scoped lang="postcss">
 @b MoviesList {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(0, var(--s-frame-width)));
+    grid-template-columns: repeat(auto-fit, minmax(0, theme(spacing.10)));
     gap: theme(spacing.6);
 
     @e frame {

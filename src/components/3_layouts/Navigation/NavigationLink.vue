@@ -50,26 +50,30 @@ export default {
 <style scoped lang="postcss">
 @b NavigationLink {
     position: relative;
-    padding: ms(1) var(--inner-space);
+    padding: theme(spacing.4) theme(spacing.5);
     cursor: pointer;
-    color: color(foreground);
-
-    &:hover {
-        color: color(secondary, lightest);
-    }
 
     @e itself {
-        display: flex;
+        box: horizontal;
         position: relative;
+        font-weight: theme(fontWeight.regular);
+        color: theme(colors.primary.200);
+
+        &:hover {
+            color: theme(colors.primary.accent.100);
+        }
 
         @is active {
-            color: color(secondary, lighter);
-            font-weight: 500;
+            color: theme(colors.primary.accent.300);
+            font-weight: theme(fontWeight.bold);
+            pointer-events: none;
         }
     }
 
     @e icon {
         margin-right: theme(spacing.4);
+        size: 1.3em;
+        transform: translateY(-1px);
 
         @is active {
         }
@@ -86,8 +90,8 @@ export default {
     }
 
     @e subLabel {
-        margin-top: theme(spacing.4);
-        color: color(foreground, dimer);
+        margin-top: theme(spacing.2);
+        color: theme(colors.primary.400);
         font-size: theme(spacing.3);
     }
 

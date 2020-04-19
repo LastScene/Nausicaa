@@ -1,9 +1,3 @@
-<template>
-    <counter :class="b()">
-        <movies-list :list="archiveRepo.$" />
-    </counter>
-</template>
-
 <script>
 import { inject } from '@vue/composition-api';
 import { RepositoryKey } from '~repository$';
@@ -29,11 +23,18 @@ export default {
 };
 </script>
 
+<template>
+    <counter :class="b()">
+        <movies-list
+            :class="b('moviesList')"
+            :list="archiveRepo.$"
+        />
+    </counter>
+</template>
+
+
 <style scoped lang="postcss">
-.Archive {
-
-    @e counter {}
-
+@b Archive {
     @e moviesList {}
 }
 </style>

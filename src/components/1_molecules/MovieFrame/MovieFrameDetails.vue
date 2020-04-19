@@ -13,28 +13,29 @@ export default {
 </script>
 
 <template>
-    <div class="details">
-        <h1 class="details__title">
+    <div :class="b()">
+        <h1 :class="b('title')">
             {{ movie.title }}
         </h1>
-        <span class="details__director">
+        <span :class="b('director')">
             {{ movie.director }}
         </span>
     </div>
 </template>
 
 <style scoped lang="postcss">
-.details {
+@b MovieFrameDetails {
+    padding: var(--movie-frame-inner-space);
 
     @e title {
-        font-size: theme(spacing.4);
-        color: color(foreground);
-        font-weight: 600;
+        font-size: theme(fontSize.lg);
+        color: theme(colors.primary.200);
+        font-weight: theme(fontWeight.semibold);
     }
 
     @e director {
-        font-size: theme(spacing.3);
-        font-weight: 500;
+        font-size: theme(fontSize.base);
+        color: theme(colors.primary.accent.200);
     }
 }
 </style>

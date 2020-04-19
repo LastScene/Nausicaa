@@ -1,29 +1,3 @@
-<template>
-    <div
-        class="searcher"
-        :class="{
-            'searcher--active:true': isActive
-        }"
-    >
-        <base-icon
-            :class="{
-                'searcher__icon--active:true': isActive
-            }"
-            class="searcher__icon"
-            name="search-line"
-        />
-        <input
-            v-model="value"
-            type="text"
-            class="searcher__field"
-            placeholder="Search for anything..."
-            @focus="isActive = true"
-            @blur="isActive = false"
-            @input="$emit('input', value)"
-        >
-    </div>
-</template>
-
 <script>
 export default {
     name: 'Searcher',
@@ -37,56 +11,66 @@ export default {
 };
 </script>
 
+<template>
+    <div
+        :class="b({ isActive })"
+    >
+        <base-icon
+            :class="b('icon', { isActive })"
+            name="search-line"
+        />
+        <input
+            v-model="value"
+            type="text"
+            :class="b('field', { isActive })"
+            placeholder="Search for anything..."
+            @focus="isActive = true"
+            @blur="isActive = false"
+            @input="$emit('input', value)"
+        >
+    </div>
+</template>
+
 <style scoped lang="postcss">
-.searcher {
-    --s-inner-space: theme(spacing.4);
-    border-bottom: 2px solid color(background, lighter);
-    width: ms(6);
-    display: flex;
+@b Searcher {
+    --searcher-inner-space: theme(spacing.4);
+    background-color: theme(colors.primary.200);
+    width: theme(spacing.11);
+    box: horizontal middle;
     position: relative;
+    border-radius: theme(borderRadius.full);
+    box-shadow: 0 5px 20px 0 color(theme(colors.primary.100) a(20%));
 
-    &::before {
-        content: '';
-        position: absolute auto 0 0 0;
-        background-color: color(primary);
-        height: 2px;
-        bottom: -2px;
-        transform-origin: left;
-        transform: scaleX(0);
-        transition: transform .15s cubic-bezier(.37, .54, .35, 1.02);
-    }
-
-    &--active\: {
-
-        &true {
-
-            &::before {
-                transform: scaleX(1);
-            }
-        }
+    @is active {
+        background-color: theme(colors.primary.accent.200);
     }
 
     @e icon {
-        color: color(background, lighter);
-        padding: var(--s-inner-space);
-        height: ms(2);
-        margin-right: theme(spacing.4);
+        color: theme(colors.primary.400);
+        size: 1.3em;
+        margin-left: var(--searcher-inner-space);
+        margin-right: theme(spacing.3);
         flex-shrink: 0;
-        &--active\: {
 
-            &true {
-                color: color(primary);
-            }
+        @is active {
+            color: theme(colors.primary.600);
         }
     }
 
     @e field {
-        color: color(foreground);
-        padding: var(--s-inner-space);
+        padding: var(--searcher-inner-space) 0;
         flex-grow: 1;
 
         &::placeholder {
-            color: color(foreground, dimer);
+            color: theme(colors.primary.400);
+        }
+
+        @is active {
+            color: theme(colors.primary.600);
+
+            &::placeholder {
+                color: theme(colors.primary.accent.500);
+            }
         }
     }
 }

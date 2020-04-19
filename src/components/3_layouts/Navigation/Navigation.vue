@@ -1,23 +1,3 @@
-<template>
-    <ul
-        ref="NavigationElement"
-        :class="b()"
-    >
-        <div
-            v-if="pointerPositionStyle"
-            ref="pointer"
-            :class="b('pointer')"
-            :style="pointerPositionStyle"
-        />
-        <navigation-link
-            v-for="(link, linkIndex) in links"
-            :key="linkIndex"
-            :link="link"
-            :class="b('link')"
-        />
-    </ul>
-</template>
-
 <script>
 import NavigationLink from './NavigationLink';
 
@@ -101,19 +81,39 @@ export default {
 };
 </script>
 
+<template>
+    <ul
+        ref="NavigationElement"
+        :class="b()"
+    >
+        <div
+            v-if="pointerPositionStyle"
+            ref="pointer"
+            :class="b('pointer')"
+            :style="pointerPositionStyle"
+        />
+        <navigation-link
+            v-for="(link, linkIndex) in links"
+            :key="linkIndex"
+            :link="link"
+            :class="b('link')"
+        />
+    </ul>
+</template>
+
 <style scoped lang="postcss">
-.Navigation {
-    padding: var(--inner-space, ms(2)) 0;
+@b Navigation {
+    padding: theme(spacing.5) *;
     overflow: hidden;
     display: grid;
     position: relative;
 
     @e pointer {
-        size: ms(2);
-        left: 0;
+        size: theme(spacing.4);
         border-radius: 50%;
         position: absolute;
-        box-shadow: 10px 0 40px 0 color(secondary, lightest);
+        left: 0;
+        box-shadow: 20px 0 30px 0 theme(colors.primary.accent.200);
         transition: top .15s cubic-bezier(0, .68, .49, 1.04);
         transform: translateY(-70%) translateX(-100%);
     }

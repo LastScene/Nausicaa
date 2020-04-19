@@ -56,13 +56,13 @@ export default {
 
 
 <style scoped lang="postcss">
-.Root {
-    padding: var(--inner-space);
+@b Root {
+    padding: theme(spacing.5);
     display: grid;
-    grid-template-columns: ms(5) minmax(0, 1fr);
+    grid-template-columns: theme(spacing.10) minmax(0, 1fr);
     align-items: start;
     margin: auto;
-    gap: ms(3);
+    gap: theme(spacing.7);
     position: relative;
 
     @e loading {
@@ -70,18 +70,18 @@ export default {
         width: 100vw;
         height: 100vh;
         box: center middle;
-        background-color: color(background);
+        background-color: themes(colors.primary.600);
     }
 
     @e loadingIcon {
-        size: ms(3);
-        color: color(primary);
+        size: theme(spacing.6);
+        color: theme(colors.primary.accent.300);
     }
 
     @e sidebar {
-        height: calc(100vh - (var(--inner-space) * 2));
+        height: calc(100vh - (theme(spacing.5) * 2));
         position: sticky;
-        top: var(--inner-space);
+        top: theme(spacing.5);
     }
 }
 </style>

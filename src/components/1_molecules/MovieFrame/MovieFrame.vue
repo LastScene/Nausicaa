@@ -1,16 +1,16 @@
 <script>
 import { provide } from '@vue/composition-api';
 import MovieShape from '~shapes/movie';
-import Cover from './-Cover';
+import MovieFrameCover from './MovieFrameCover';
 import ImdbRate from '~atoms/ImdbRate/ImdbRate';
-import Details from './-Details';
+import MovieFrameDetails from './MovieFrameDetails';
 
 export default {
     name: 'MovieFrame',
     components: {
         ImdbRate,
-        'mf-cover': Cover,
-        'mf-details': Details
+        'mf-cover': MovieFrameCover,
+        'mf-details': MovieFrameDetails
     },
     props: {
         movie: MovieShape
@@ -37,23 +37,20 @@ export default {
 
 <style scoped lang="postcss">
 @b MovieFrame {
-    display: grid;
-    grid-template-rows: calc(var(--s-width) * 167.5 / 100), max-content;
-    gap: ms(1);
+    --movie-frame-inner-space: theme(spacing.4);
     position: relative;
-    width: var(--s-width);
 
     @e cover {
-
+        @apply aspect-ratio-poster;
+        box-shadow: 0 10px 20px 0 color(theme(colors.gray.900) a(70%));
     }
 
     @e imdbRate {
         position: absolute auto auto 0 0;
-        margin: var(--s-inner-vertical-space);
+        margin: var(--movie-frame-inner-space);
     }
 
     @e details {
-        padding: 0 var(--s-inner-vertical-space);
     }
 }
 </style>
