@@ -27,7 +27,7 @@ export default {
     <counter :class="b()">
         <movies-list
             :class="b('moviesList')"
-            :list="archiveRepo.$"
+            :list="archiveRepo.$.list"
         />
     </counter>
 </template>

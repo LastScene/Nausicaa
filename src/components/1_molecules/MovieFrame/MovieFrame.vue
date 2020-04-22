@@ -3,6 +3,7 @@ import { provide } from '@vue/composition-api';
 import MovieShape from '~shapes/movie';
 import MovieFrameCover from './MovieFrameCover';
 import ImdbRate from '~atoms/ImdbRate/ImdbRate';
+import MovieFrameSecondaryDetails from './MovieFrameSecondaryDetails';
 import MovieFrameDetails from './MovieFrameDetails';
 
 export default {
@@ -10,10 +11,11 @@ export default {
     components: {
         ImdbRate,
         'mf-cover': MovieFrameCover,
-        'mf-details': MovieFrameDetails
+        'mf-details': MovieFrameDetails,
+        'mf-secondary-details': MovieFrameSecondaryDetails
     },
     props: {
-        movie: MovieShape
+        movie: MovieShape.isRequired.loose
     },
     setup(props, context) {
         provide('movie', props.movie);
@@ -28,8 +30,9 @@ export default {
         <mf-cover :class="b('cover')">
             <imdb-rate
                 :class="b('imdbRate')"
-                :value="8.1"
+                :value="movie.imdbRate"
             />
+            <mf-secondary-details :class="b('secondaryDetails')" />
         </mf-cover>
         <mf-details :class="b('details')" />
     </article>
@@ -41,12 +44,16 @@ export default {
     position: relative;
 
     @e cover {
-        @apply aspect-ratio-poster;
-        box-shadow: 0 10px 20px 0 color(theme(colors.gray.900) a(70%));
+
     }
 
     @e imdbRate {
         position: absolute auto auto 0 0;
+        margin: var(--movie-frame-inner-space);
+    }
+
+    @e secondaryDetails {
+        position: absolute auto 0 0 auto;
         margin: var(--movie-frame-inner-space);
     }
 

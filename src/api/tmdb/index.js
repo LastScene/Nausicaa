@@ -2,6 +2,7 @@ import { createHttp, setParam as setHttpParam, setToken as setHttpToken } from '
 import setting from './setting';
 import account from './account';
 import list from './list';
+import movie from './movie';
 
 // tmdb.common.images_uri = 'https://image.tmdb.org/t/p/';
 export const tmdbHttp = createHttp({
@@ -16,5 +17,6 @@ setHttpToken(tmdbHttp, localStorage.getItem('accessToken') || process.env.VUE_AP
 export default {
     setting: setting(tmdbHttp),
     account: account(tmdbHttp),
-    list: list(tmdbHttp)
+    list: list(tmdbHttp),
+    movie: movie(tmdbHttp)
 };

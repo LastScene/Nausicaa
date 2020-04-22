@@ -6,6 +6,8 @@ import _upperFirst from 'lodash.upperfirst';
 import _camelCase from 'lodash.camelcase';
 import vueBemCn from 'vue-bem-cn';
 
+import SmoothReflow from '~functionals/SmoothReflow/SmoothReflow';
+
 import App from './App.vue';
 import router from './router';
 import '~styles/base.css';
@@ -47,6 +49,7 @@ Vue.use(vueBemCn, {
     hyphenate: false
 });
 
+Vue.component('SmoothReflow', SmoothReflow);
 
 Vue.config.productionTip = false;
 

@@ -27,9 +27,10 @@ export default {
 
 <style scoped lang="postcss">
 @b MovieFrameCover {
-    size: 100%;
     border-radius: theme(borderRadius.default);
     position: relative;
+    @apply aspect-ratio-poster;
+    box-shadow: 0 10px 20px 0 color(theme(colors.gray.900) a(70%));
 
     @e image {
         position: absolute 0 0 0 0;

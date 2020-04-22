@@ -20,7 +20,7 @@ export default {
         accountRepo._.getDetails();
 
         const hasAllInitialData = computed(() => {
-            return accountRepo.$.username;
+            return !!accountRepo.$.username;
         });
 
         return {

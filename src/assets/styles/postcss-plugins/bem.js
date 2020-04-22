@@ -9,7 +9,8 @@ const toTitleCase = (str) => {
 const createRule = (selector, atRule) => {
     const rule = postcss.rule({
         selector,
-        source: atRule.source
+        source: atRule.source,
+        raws: atRule.raws
     });
     rule.nodes = (atRule.nodes && atRule.nodes.map((node) => {
         return node.clone({

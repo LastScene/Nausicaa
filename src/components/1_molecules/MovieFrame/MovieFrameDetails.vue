@@ -18,13 +18,14 @@ export default {
             {{ movie.title }}
         </h1>
         <span :class="b('director')">
-            {{ movie.director }}
+            {{ movie.director.name }}
         </span>
     </div>
 </template>
 
 <style scoped lang="postcss">
 @b MovieFrameDetails {
+    box: vertical;
     padding: var(--movie-frame-inner-space);
 
     @e title {
@@ -36,6 +37,7 @@ export default {
     @e director {
         font-size: theme(fontSize.base);
         color: theme(colors.primary.accent.200);
+        margin-top: theme(spacing.2);
     }
 }
 </style>
