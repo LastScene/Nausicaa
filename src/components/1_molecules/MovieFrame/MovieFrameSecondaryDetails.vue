@@ -100,6 +100,7 @@ export default {
         transition: all .15s;
         border-radius: theme(borderRadius.full) theme(borderRadius.full) 0 theme(borderRadius.full);
         overflow: hidden;
+        font-size: theme(fontSize.sm);
 
         @is visible {
             pointer-events: all;

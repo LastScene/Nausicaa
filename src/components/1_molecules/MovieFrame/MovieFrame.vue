@@ -5,12 +5,14 @@ import MovieFrameCover from './MovieFrameCover';
 import ImdbRate from '~atoms/ImdbRate/ImdbRate';
 import MovieFrameSecondaryDetails from './MovieFrameSecondaryDetails';
 import MovieFrameDetails from './MovieFrameDetails';
+import MovieFrameStates from './MovieFrameStates.vue';
 
 export default {
     name: 'MovieFrame',
     components: {
         ImdbRate,
         'mf-cover': MovieFrameCover,
+        'mf-states': MovieFrameStates,
         'mf-details': MovieFrameDetails,
         'mf-secondary-details': MovieFrameSecondaryDetails
     },
@@ -27,6 +29,7 @@ export default {
 
 <template>
     <article :class="b()">
+        <mf-states :class="b('states')" />
         <mf-cover :class="b('cover')">
             <imdb-rate
                 :class="b('imdbRate')"
@@ -40,21 +43,26 @@ export default {
 
 <style scoped lang="postcss">
 @b MovieFrame {
-    --movie-frame-inner-space: theme(spacing.4);
+    --movieFrame-innerSpace: theme(spacing.4);
     position: relative;
+    display: grid;
+    grid-auto-flow: row;
 
     @e cover {
+    }
 
+    @e states {
+        margin-bottom: theme(spacing.2);
     }
 
     @e imdbRate {
         position: absolute auto auto 0 0;
-        margin: var(--movie-frame-inner-space);
+        margin: var(--movieFrame-innerSpace);
     }
 
     @e secondaryDetails {
         position: absolute auto 0 0 auto;
-        margin: var(--movie-frame-inner-space);
+        margin: var(--movieFrame-innerSpace);
     }
 
     @e details {

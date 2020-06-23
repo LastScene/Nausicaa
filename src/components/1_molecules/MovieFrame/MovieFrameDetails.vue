@@ -26,7 +26,7 @@ export default {
 <style scoped lang="postcss">
 @b MovieFrameDetails {
     box: vertical;
-    padding: var(--movie-frame-inner-space);
+    padding: var(--movieFrame-innerSpace);
 
     @e title {
         font-size: theme(fontSize.lg);
